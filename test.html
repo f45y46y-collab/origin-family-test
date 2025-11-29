@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原生家庭影响测评</title>
+<style>
+body {font-family: sans-serif; padding: 20px; background:#f7f8fc; color:#333;}
+h1 {font-size: 24px; text-align:center;}
+.question {margin: 18px 0; font-weight: 600;}
+button {border:none; padding:12px 16px; margin:6px; border-radius:8px; cursor:pointer;}
+.btn {background:#7b95f7; color:#fff;}
+.result {font-size:20px;margin-top:20px;font-weight:bold;text-align:center;}
+</style>
+</head>
+
+<body>
+<h1>原生家庭影响测评</h1>
+<p style="text-align:center; font-size:14px; opacity:.7;">做完会告诉你情绪问题的根源</p>
+
+<div id="test"></div>
+
+<div style="text-align:center; margin-top:20px;">
+<button class="btn" onclick="showResult()">查看结果</button>
+</div>
+
+<div class="result" id="result"></div>
+
+<script>
+
+const questions = [
+"我很容易因为小错误而责备自己",
+"别人随口一句话会让我怀疑自己",
+"我觉得无论做什么都不够好",
+"得到别人肯定对我来说非常重要",
+"当有人批评我，我会立刻紧张或难受",
+"我总觉得自己不值得被爱",
+"我不太懂如何表达情绪",
+"我会假装没事，不想麻烦别人",
+"我不相信会有人真正理解我",
+"我经常觉得孤独，即使身边有人",
+"我习惯隐藏需求，不想显得软弱",
+"我害怕被拒绝或抛弃",
+"我会下意识迎合他人期望",
+"我很难说“不”",
+"我经常承担不属于我的责任",
+"我害怕让别人失望",
+"我总觉得自己欠别人什么",
+"我做决定时，总想别人来认可",
+"在关系中，我容易没有安全感",
+"如果对方冷淡，我会立刻慌",
+"我经常吸引到不稳定的人",
+"我害怕深度亲密",
+"我很难完全信任伴侣",
+"我有时会黏人，有时极度疏远",
+"我小时候常被要求懂事成熟",
+"我经常照顾别人，却没被照顾",
+"我不允许自己情绪失控",
+"我感觉自己一直在承担“家里的责任”",
+"父母的情绪会决定我的情绪",
+"我小时候很少被允许表达“不”",
+"我小时候经常被否定或比较",
+"父母很少听我解释",
+"我害怕争吵和冲突",
+"我总觉得要赢、要强",
+"小时候做得不够好就会挨批",
+"我的童年缺少拥抱、肯定、鼓励",
+"我觉得父母不是真正了解我",
+"我习惯在压力下一个人扛",
+"我几乎没被允许犯错",
+"我常怀疑父母是否真的爱我"
+];
+
+let html = "";
+for(let i=0;i<questions.length;i++){
+ html += `<div class="question">${i+1}. ${questions[i]}</div>
+ <label><input type="radio" name="q${i}" value="4"> 非常符合</label><br>
+ <label><input type="radio" name="q${i}" value="3"> 较符合</label><br>
+ <label><input type="radio" name="q${i}" value="2"> 偶尔符合</label><br>
+ <label><input type="radio" name="q${i}" value="1"> 不符合</label><br>`;
+}
+document.getElementById("test").innerHTML = html;
+
+function showResult(){
+ let score = 0;
+ for(let i=0;i<questions.length;i++){
+    let val = document.querySelector(`input[name="q${i}"]:checked`);
+    if(val) score += parseInt(val.value);
+ }
+ if(score === 0){
+    alert("请先回答所有题目");
+    return;
+ }
+ document.getElementById("result").innerHTML =
+ "你的结果已生成 <br><br>👇 点击下方查看完整报告";
+ setTimeout(()=>{
+     window.location.href="report.html";
+ },1500);
+}
+</script>
+</body>
+</html>
