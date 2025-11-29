@@ -3,61 +3,267 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>原生家庭影响测评 - 完整报告</title>
+<title>原生家庭影响测评 · 结果报告</title>
 <style>
-body {font-family: "PingFang SC", sans-serif; padding: 22px; background:#fbfafc; color:#222; line-height:1.7;}
-h1{text-align:center; font-size:24px; margin-bottom:15px;}
-.section-title {font-weight:bold; font-size:20px; margin:25px 0 10px; color:#5a67d8;}
-.box {background:white; padding:18px; border-radius:10px; margin-top:20px; box-shadow:0 4px 12px rgba(0,0,0,.08);}
-p {margin:10px 0;}
-.notice{text-align:center; color:#666; font-size:14px; margin-top:25px;}
+body {font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft Yahei",sans-serif;background:#f5f5fb;color:#111827;margin:0;padding:16px;line-height:1.7;}
+.wrap {max-width:760px;margin:0 auto;background:#fff;border-radius:18px;padding:20px 18px 26px;box-shadow:0 18px 45px rgba(15,23,42,.12);}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;margin-right:6px;margin-bottom:6px;}
+.tag-a{background:#fee2e2;color:#b91c1c;}
+.tag-b{background:#ffedd5;color:#c05621;}
+.tag-c{background:#e0f2fe;color:#0369a1;}
+.tag-d{background:#dcfce7;color:#166534;}
+h1{font-size:22px;margin:4px 0 2px;}
+.sub{font-size:13px;color:#6b7280;margin-bottom:12px;}
+h2{font-size:18px;margin-top:18px;margin-bottom:6px;}
+p{margin:6px 0;font-size:14px;}
+ul{padding-left:20px;margin:6px 0;}
+li{margin:4px 0;font-size:14px;}
+.highlight{font-weight:bold;color:#111827;}
+.section{margin-top:12px;}
+.footer{margin-top:22px;font-size:12px;color:#9ca3af;text-align:center;}
+.btn{display:inline-block;margin-top:14px;padding:9px 14px;border-radius:999px;font-size:13px;text-decoration:none;}
+.btn-main{background:#4f46e5;color:#fff;}
+.btn-ghost{border:1px solid #e5e7eb;color:#4b5563;}
+.chip{display:inline-block;font-size:11px;background:#f3f4ff;color:#4f46e5;border-radius:999px;padding:2px 8px;margin-right:4px;margin-top:4px;}
 </style>
 </head>
-
 <body>
-
-<h1>原生家庭影响测评 · 完整报告</h1>
-
-<p>以下是基于你的 40 道回答，并结合六大原生家庭影响模型后生成的个人深度解析。</p>
-
-<div class="box">
-
-<div class="section-title">① 自我价值感的形成</div>
-<p>你的自我价值感经历了压抑、否定或过高期待，你习惯依靠外界评价确定自己的好坏。</p>
-<p>这并不是你不够好，而是你的成长环境让你学会了“用表现换爱”。</p>
-
-<div class="section-title">② 情绪表达与压抑机制</div>
-<p>你很敏感，对情绪感受深，但你习惯把痛苦压在心底。</p>
-<p>这导致你容易累、容易焦虑，越长大越觉得“没人真正懂你”。</p>
-
-<div class="section-title">③ 亲密关系中的模式</div>
-<p>你渴望爱，却又害怕爱。</p>
-<p>因为在你的潜意识里：亲密 = 风险。  
-你经常在“靠近”和“撤退”之间摇摆，这不是你的错，是经验刻在了身体里。</p>
-
-<div class="section-title">④ 童年家庭信息印记</div>
-<p>你小时候承担了过多责任，或经历了忽视、否定、比较、控制等模式。</p>
-<p>这些经历构成了你现在的性格：懂事、敏感、强撑、不敢表达需求。</p>
-
-<div class="section-title">⑤ 你的潜意识盲点</div>
-<p>你一直在努力成为一个“没问题的大人”。  
-但其实，你真正疲惫的是那个从未被安慰过的小孩。</p>
-
-<div class="section-title">⑥ 疗愈建议（最重要）</div>
-<p>真正的改变不是变强，而是允许自己变“真实”。</p>
-<p>以下建议对你非常关键：</p>
-<ul>
-<li>允许自己表达“不舒服”的情绪</li>
-<li>减少讨好行为，练习温和坚定</li>
-<li>把“我是不是不够好”换成“我是否忠于自己”</li>
-<li>给自己提供以前缺失的——肯定、陪伴、理解</li>
-</ul>
-
-<p>你值得被爱，不是因为你优秀，而是因为你是你。</p>
-
+<div class="wrap" id="report">
+  <div id="header"></div>
+  <div id="content"></div>
+  <div class="footer">
+    本报告仅供本人自我觉察和学习使用，不构成任何临床诊断或医疗建议。<br>
+    建议你把今天的感受记录下来，三个月后再做一次，对比自己的变化。
+  </div>
 </div>
 
-<p class="notice">本报告仅供购买者本人使用，请勿外传。</p>
+<script>
+function getType(){
+  const sp = new URLSearchParams(window.location.search);
+  const t = sp.get("type");
+  if(!t) return "A"; // 默认 A
+  return t.toUpperCase();
+}
 
+const TYPE_TEXT = {
+  A: {
+    name: "A 型 · 压抑型原生家庭影响",
+    tags: ["讨好模式","自我价值感受损","情绪向内攻击"],
+    summary: "你是那种“外表看起来很懂事、很坚强”，但内心常常在和自己打架的人。你习惯先怀疑自己、责备自己，而不是允许自己合理生气。",
+    blocks: [
+      {
+        title: "① 你是怎么被训练成“对自己很苛刻”的？",
+        body: [
+          "在 A 型家庭中，小孩往往在这样的环境里长大：犯错 = 被责备 / 被冷脸 / 被忽视。所以你逐渐学会：尽量不要给别人添麻烦，更不要“让别人失望”。",
+          "久而久之，你把这一套标准全部内化到了自己身上——有一点点没做好，就会在心里骂自己：“怎么又这样”“你怎么这么没用”。",
+          "这并不代表你真的是“没用的人”，而是说明：你的大脑已经被旧有的家庭语气占据了位置。你只是习惯性地，用父母当年的方式对待现在的自己。"
+        ]
+      },
+      {
+        title: "② 情绪的走向：对别人温柔，对自己残忍",
+        body: [
+          "你对别人往往非常体谅、能共情，但轮到自己，就会觉得“这些情绪太矫情、太麻烦”。",
+          "这类人很容易发展出：高敏感 + 高压抑 的组合——别人一个表情变化，一个语气冷一点，你心里就会立刻开始紧张，开始猜：“是不是我哪里做错了？”",
+          "长期下来，身体也会帮你“扛”：失眠、反复焦虑、莫名疲惫、肠胃紧绷、肩颈僵硬……很多时候都在说明：你对自己太不温柔了。"
+        ]
+      },
+      {
+        title: "③ 在亲密关系里的隐藏脚本",
+        body: [
+          "你在关系中有一个很强的信念：只要我表现足够好、足够懂事，对方就会留下来。这让你特别容易进入讨好模式。",
+          "当对方有一点点冷淡，你的大脑会立刻进入“扫描危险”状态：回放自己最近说过的话、做过的事，看自己是不是做错了什么。",
+          "你不是不会生气，而是——一生气就会内疚，一内疚就会开始对自己发火，最后变成：对别人道歉，对自己下狠手。"
+        ]
+      },
+      {
+        title: "④ 给 A 型的疗愈建议：练习“对自己温柔一点”",
+        body: [
+          "第一步：从觉察开始。当你又在心里骂自己时，先不急着反驳，只需要默默说一句：<span class='highlight'>“我又在用旧的方式对自己说话了。”</span>",
+          "第二步：把当年的“责备者”还回去。你可以在心里对小时候的自己说：“你那时已经很努力了，不该被那样对待。”这不是控诉父母，而是帮那个小孩“证实自己的委屈”。",
+          "第三步：每天给自己一次“允许不完美”的练习：允许今天有一个小地方可以做得一般一点、允许一次迟缓、允许一次拒绝别人而不是委屈自己。",
+          "当你开始允许自己“不是永远满分”时，你会发现——那些紧绷的地方，真的有在慢慢松动。"
+        ]
+      }
+    ]
+  },
+
+  B: {
+    name: "B 型 · 冲突型原生家庭影响",
+    tags: ["高敏感","情绪拉扯","害怕又渴望亲近"],
+    summary: "你可能来自一个情绪波动比较大的家庭：争吵、冷战、摔门、暴脾气、情绪勒索……这些都让你对“亲密”和“安全”有着复杂又矛盾的感受。",
+    blocks: [
+      {
+        title: "① 你对“亲密”的感受：既上瘾又害怕",
+        body: [
+          "在 B 型家庭里，小孩往往在混乱、冲突和不稳定中长大：上一秒还好好的，下一秒就可能突然爆炸或者冷暴力。",
+          "于是你的大脑学会了一个模式：<span class='highlight'>“我要时刻警惕，准备应对突然的情绪爆发。”</span>",
+          "长大之后，你很可能会在关系里反复出现：一靠近就很投入，一受伤就立刻缩回去；你不是不想亲近，而是太熟悉“亲近之后一定会受伤”的剧本。"
+        ]
+      },
+      {
+        title: "② 情绪反应：不是你“太敏感”，而是你曾经需要靠敏感生存",
+        body: [
+          "别人说你敏感、多想、反应大，可现实是——小时候如果你不敏感，你就无法判断今天家里会不会又出事。",
+          "你必须通过微小的信号去预判：父母的脸色、语气、关门声、走路的脚步声……久而久之，你的大脑就被训练成了“高灵敏雷达系统”。",
+          "所以你现在的敏感，本质上是：<span class='highlight'>曾经的生存策略一直还在努力保护你。</span>"
+        ]
+      },
+      {
+        title: "③ 在感情里的循环：吵完又和、和完又怕",
+        body: [
+          "你可能会不自觉地被一些“情绪很强的人”吸引，因为这种熟悉感，会让你觉得自己“活着”、“有感觉”。",
+          "但同时，你又会被对方的情绪大起大落搞得精疲力尽——吵得很凶、和得很甜、反复好几次后，你会怀疑自己是不是“有问题”。",
+          "事实是：你只是把童年的关系模式，带到了成年世界里 —— 你熟悉的，不一定是你真正想要的。"
+        ]
+      },
+      {
+        title: "④ 给 B 型的疗愈建议：练习“稳定比刺激更重要”",
+        body: [
+          "第一步：承认自己的敏感是合理的 —— 它救过你，不是你的错。",
+          "第二步：慢慢地给自己建立“稳定体验”：按时吃饭、规律作息、固定联系几个让你安心的人，而不是只在情绪很爆炸的时候才找人。",
+          "第三步：在新的关系里，刻意选择“情绪稳定、沟通清晰的人”，即使刚开始你会觉得有点无聊。你要允许自己从“刺激上瘾”慢慢过渡到“稳定上瘾”。",
+          "你值得一种真正安稳、不用随时紧张的亲密——而不是永远在情绪的过山车上。"
+        ]
+      }
+    ]
+  },
+
+  C: {
+    name: "C 型 · 忽视型原生家庭影响",
+    tags: ["情感忽略","习惯一个人扛","很难开口求助"],
+    summary: "你可能来自一个“物质上不一定缺，但情感上长期缺席”的家庭。没人打你骂你，但你的情绪、想法、委屈、兴奋，很少被真正看见和接住。",
+    blocks: [
+      {
+        title: "① 你从小就学会了：有事自己消化",
+        body: [
+          "在 C 型家庭里，小孩很早就会意识到：就算说出来，也不一定有人听，也不一定有人在意。",
+          "于是你慢慢学会了把所有委屈、困惑、难受，都往自己心里塞，塞到连你自己都觉得：好像也没什么大不了。",
+          "这种“自我麻木”会让你很难分辨：我现在到底是难过，还是只是疲惫？是生气，还是只是没感觉？"
+        ]
+      },
+      {
+        title: "② 你对亲密的矛盾：嘴上说“没关系”，身体却很孤独",
+        body: [
+          "你在关系里很容易保持“礼貌的距离”：不轻易麻烦别人、不轻易暴露脆弱、不轻易真正依赖谁。",
+          "可同时，你又会在深夜或者某些瞬间，突然觉得特别空、特别孤单，好像自己漂浮在世界边缘。",
+          "你看起来很独立，但这种独立，更多时候是一种“被迫的、没有别的选择的独立”。"
+        ]
+      },
+      {
+        title: "③ 情绪模式：理性很强，但身体很诚实",
+        body: [
+          "你可能很会安慰别人，却很少认真安慰自己。你更习惯用“分析、讲道理、想通了”来处理情绪。",
+          "但情绪不是道理问题 —— 它需要被感觉、被陪伴、被接住，而不只是被说服。",
+          "于是你会出现一种常见状态：嘴上说“没事，我没那么在意”，但身体已经在失眠、疲惫、提不起劲。"
+        ]
+      },
+      {
+        title: "④ 给 C 型的疗愈建议：练习“把自己当成一个真实的人”",
+        body: [
+          "第一步：允许自己有情绪，而不是只允许自己“有逻辑”。可以从每天一句话开始：“今天其实有一件事，让我有一点点不舒服。”",
+          "第二步：找到一个安全的人或空间，先从 10% 的真实开始，不用一次把所有秘密掀开。你可以先说：我最近有点累，但还不知道原因。",
+          "第三步：把自己当成一个需要被照顾的小孩，而不是一个永远要扛事的大人。问问自己：“如果有一个人像我这样累，我会不会心疼他？”",
+          "当你开始把自己当成“值得被在意的人”，你的世界会慢慢从灰度变得有颜色。"
+        ]
+      }
+    ]
+  },
+
+  D: {
+    name: "D 型 · 溺爱 / 失去边界型原生家庭影响",
+    tags: ["边界感模糊","自我感弱","容易拖延和逃避"],
+    summary: "你可能成长在一个“对你管得很多、包办很多、替你做很多决定”的环境里。表面上看，你被照顾得很多，但内在的自主感、边界感、责任感，发展得比较艰难。",
+    blocks: [
+      {
+        title: "① 你对“自己的人生”的感觉：好像一直在被安排",
+        body: [
+          "在 D 型家庭里，父母往往会用“我都是为你好”“你什么都不用操心”来表达爱。",
+          "你很多选择都被决定好了：读什么、学什么、怎么过、要不要换工作，要不要分手……",
+          "久而久之，你会出现一种典型体验：<span class='highlight'>“我好像活在别人设计的人生里。”</span>"
+        ]
+      },
+      {
+        title: "② 行动力与拖延：不是懒，而是长期被剥夺选择权之后的无力感",
+        body: [
+          "当你需要自己做决定、自己扛结果时，你的大脑会出现一种空白：“我真的能选吗？我真的做得到吗？”",
+          "很多被说“懒”“不上进”“拖延”的人，其实都经历过：小时候做任何决定都被否定，或根本没有决策权。",
+          "所以你现在的拖延，很可能是：害怕做错 → 索性不动 → 用逃避来保护自己不被再一次批评。"
+        ]
+      },
+      {
+        title: "③ 在关系中的边界：很容易被吞没、被控制",
+        body: [
+          "你在关系里容易被强势的人吸引，因为那种熟悉的“有人替我想好一切”的感觉，既安全又危险。",
+          "如果对方提出很多要求，你很难说“不”，因为你会立刻联想到：“不顺从 = 不懂事 / 不听话 / 不爱我”。",
+          "同时，你也可能会在某些时刻突然爆炸，因为你内心深处其实非常渴望：<span class='highlight'>“终于有一个地方是我自己说了算的。”</span>"
+        ]
+      },
+      {
+        title: "④ 给 D 型的疗愈建议：练习“把人生一点点拿回自己手里”",
+        body: [
+          "第一步：从极小的选择开始练习：今天想吃什么？今天想几点睡？今天这一小时想干什么？——不要立刻想着“我要改变整个人生”。",
+          "第二步：允许自己做一些“不完美”的决定。就算选错了一家餐厅、报错了课程，也只是损失一点钱和时间，而不是“人生毁了”。",
+          "第三步：给父母的期待和你自己的人生划一条温和的线：你可以这样对自己说：<span class='highlight'>“谢谢他们为我做过的，也轮到我学习为自己负责了。”</span>",
+          "你不是一个“搞不定自己的人”，你只是还没有被允许，亲手体验那种“我可以把自己照顾好”的成就感。"
+        ]
+      }
+    ]
+  }
+};
+
+const type = getType();
+const data = TYPE_TEXT[type] || TYPE_TEXT["A"];
+
+function render(){
+  const headerEl = document.getElementById("header");
+  const contentEl = document.getElementById("content");
+
+  let tagsHtml = "";
+  data.tags.forEach((t, idx)=>{
+    const cls = type === "A" ? "tag tag-a" :
+                type === "B" ? "tag tag-b" :
+                type === "C" ? "tag tag-c" : "tag tag-d";
+    tagsHtml += `<span class="${cls}">${t}</span>`;
+  });
+
+  headerEl.innerHTML = `
+    <div>${tagsHtml}</div>
+    <h1>${data.name}</h1>
+    <p class="sub">${data.summary}</p>
+    <div>
+      <span class="chip">情绪模式解析</span>
+      <span class="chip">亲密关系脚本</span>
+      <span class="chip">疗愈建议</span>
+    </div>
+  `;
+
+  let html = "";
+  data.blocks.forEach(block=>{
+    html += `<div class="section">
+      <h2>${block.title}</h2>`;
+    block.body.forEach(p=>{
+      html += `<p>${p}</p>`;
+    });
+    html += `</div>`;
+  });
+
+  html += `
+    <div class="section">
+      <h2>下一步可以怎么做？</h2>
+      <p>如果你愿意，可以把这份结果截图或复制下来，作为你自我觉察旅程的一个起点。</p>
+      <p>你也可以在几个月后，再做一次同样的测评，看看自己的情绪模式、关系选择、内在对话，有没有发生一些细微但真实的变化。</p>
+    </div>
+
+    <div style="margin-top:14px;">
+      <a class="btn btn-main" href="index.html">🔁 重新测评一次</a>
+      <a class="btn btn-ghost" href="#">⭐ 收藏本页，随时回来看</a>
+    </div>
+  `;
+
+  contentEl.innerHTML = html;
+}
+
+render();
+</script>
 </body>
 </html>
