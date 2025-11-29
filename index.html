@@ -5,100 +5,158 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>原生家庭影响测评</title>
 <style>
-body {font-family: sans-serif; padding: 20px; background:#f7f8fc; color:#333;}
-h1 {font-size: 24px; text-align:center;}
-.question {margin: 18px 0; font-weight: 600;}
-button {border:none; padding:12px 16px; margin:6px; border-radius:8px; cursor:pointer;}
-.btn {background:#7b95f7; color:#fff;}
-.result {font-size:20px;margin-top:20px;font-weight:bold;text-align:center;}
+body {font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft Yahei", sans-serif; padding: 20px; background:#f7f8fc; color:#333; line-height:1.6;}
+h1 {font-size: 24px; text-align:center; margin-bottom:6px;}
+.sub {text-align:center; font-size:13px; opacity:.7; margin-bottom:14px;}
+.question {margin: 16px 0 10px; font-weight: 600; font-size:14px;}
+.option {margin:3px 0;}
+button {border:none; padding:12px 16px; margin:10px 0; border-radius:999px; cursor:pointer; font-size:15px;}
+.btn-main {background:#7b95f7; color:#fff; width:100%;}
+.result {font-size:18px;margin-top:12px;font-weight:bold;text-align:center;}
+.card {background:#fff; border-radius:14px; padding:14px 16px; box-shadow:0 4px 14px rgba(15,23,42,.08); max-width:700px; margin:0 auto;}
+.tag {display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; background:#eef2ff; color:#4f46e5; margin-right:6px;}
+.progress {font-size:12px; text-align:right; opacity:.7; margin-top:4px;}
 </style>
 </head>
 
 <body>
-<h1>原生家庭影响测评</h1>
-<p style="text-align:center; font-size:14px; opacity:.7;">做完会告诉你情绪问题的根源</p>
+<div class="card">
+  <h1>原生家庭影响测评</h1>
+  <p class="sub">40 题深度测评，找出你现在情绪、人际和亲密关系的「核心脚本」。</p>
+  <div style="text-align:center;margin-bottom:8px;">
+    <span class="tag">情绪模式</span>
+    <span class="tag">亲密关系</span>
+    <span class="tag">自我价值感</span>
+  </div>
 
-<div id="test"></div>
+  <div id="test"></div>
 
-<div style="text-align:center; margin-top:20px;">
-<button onclick="window.location.href='报告.html'">查看结果</button>
+  <div class="progress" id="progress"></div>
 
+  <button class="btn-main" onclick="showResult()">查看我的测评结果</button>
+  <div class="result" id="result"></div>
 </div>
 
-<div class="result" id="result"></div>
-
 <script>
-
+// 40 道题
 const questions = [
 "我很容易因为小错误而责备自己",
-"别人随口一句话会让我怀疑自己",
+"别人随口一句话会让我一直想很久",
 "我觉得无论做什么都不够好",
 "得到别人肯定对我来说非常重要",
 "当有人批评我，我会立刻紧张或难受",
-"我总觉得自己不值得被爱",
-"我不太懂如何表达情绪",
+"我总觉得自己不值得被真正喜欢",
+"我不太懂如何健康表达情绪",
 "我会假装没事，不想麻烦别人",
 "我不相信会有人真正理解我",
 "我经常觉得孤独，即使身边有人",
-"我习惯隐藏需求，不想显得软弱",
-"我害怕被拒绝或抛弃",
-"我会下意识迎合他人期望",
-"我很难说“不”",
+
+"我习惯隐藏自己的需求，不想显得脆弱",
+"我害怕被拒绝或被抛弃",
+"我会下意识迎合他人期待",
+"我很难说“不”，即使很为难",
 "我经常承担不属于我的责任",
 "我害怕让别人失望",
 "我总觉得自己欠别人什么",
-"我做决定时，总想别人来认可",
+"我做决定时，总希望有人替我拍板",
 "在关系中，我容易没有安全感",
-"如果对方冷淡，我会立刻慌",
-"我经常吸引到不稳定的人",
-"我害怕深度亲密",
-"我很难完全信任伴侣",
-"我有时会黏人，有时极度疏远",
-"我小时候常被要求懂事成熟",
-"我经常照顾别人，却没被照顾",
-"我不允许自己情绪失控",
-"我感觉自己一直在承担“家里的责任”",
-"父母的情绪会决定我的情绪",
-"我小时候很少被允许表达“不”",
-"我小时候经常被否定或比较",
-"父母很少听我解释",
+"如果对方忽冷忽热，我会立刻焦虑",
+
+"我经常吸引到不稳定、情绪多的人",
+"我一方面渴望亲密，一方面又想逃",
+"我很难完全信任伴侣或朋友",
+"我有时会突然变得很冷淡封闭",
+"我小时候常被要求“懂事、乖一点”",
+"我经常照顾别人，却很少被真正照顾",
+"我不允许自己崩溃或失控",
+"我感觉自己一直在承担家庭里的责任",
+"父母的情绪会直接影响我的情绪",
+"我小时候很少被允许表达“不想、不愿意”",
+
+"我小时候经常被否定、比较、打击",
+"父母很少耐心听我解释或倾听我",
 "我害怕争吵和冲突",
-"我总觉得要赢、要强",
-"小时候做得不够好就会挨批",
-"我的童年缺少拥抱、肯定、鼓励",
-"我觉得父母不是真正了解我",
-"我习惯在压力下一个人扛",
-"我几乎没被允许犯错",
-"我常怀疑父母是否真的爱我"
+"我总觉得要赢、要强、不能输",
+"小时候做不好就会被批评或惩罚",
+"我的童年缺少拥抱、肯定和鼓励",
+"我觉得父母并不真正了解我",
+"我习惯在压力下一个人硬扛",
+"我几乎没被允许真正做“孩子”",
+"我有时会怀疑父母是否真的无条件爱我"
 ];
 
+// 每道题归属哪一类：A/B/C/D
+// 简单分配：前10题 A，11-20 B，21-30 C，31-40 D
+const typeMap = [
+  "A","A","A","A","A","A","A","A","A","A",
+  "B","B","B","B","B","B","B","B","B","B",
+  "C","C","C","C","C","C","C","C","C","C",
+  "D","D","D","D","D","D","D","D","D","D"
+];
+
+// 生成题目
 let html = "";
 for(let i=0;i<questions.length;i++){
- html += `<div class="question">${i+1}. ${questions[i]}</div>
- <label><input type="radio" name="q${i}" value="4"> 非常符合</label><br>
- <label><input type="radio" name="q${i}" value="3"> 较符合</label><br>
- <label><input type="radio" name="q${i}" value="2"> 偶尔符合</label><br>
- <label><input type="radio" name="q${i}" value="1"> 不符合</label><br>`;
+  html += `<div class="question">${i+1}. ${questions[i]}</div>
+  <div class="option">
+    <label><input type="radio" name="q${i}" value="3"> 非常符合</label>
+  </div>
+  <div class="option">
+    <label><input type="radio" name="q${i}" value="2"> 比较符合</label>
+  </div>
+  <div class="option">
+    <label><input type="radio" name="q${i}" value="1"> 偶尔符合</label>
+  </div>
+  <div class="option">
+    <label><input type="radio" name="q${i}" value="0"> 不太符合 / 不符合</label>
+  </div>`;
 }
 document.getElementById("test").innerHTML = html;
+document.getElementById("progress").innerText = `已加载 ${questions.length} 题 · 建议用 5 分钟认真完成`;
 
 function showResult(){
- let score = 0;
- for(let i=0;i<questions.length;i++){
-    let val = document.querySelector(`input[name="q${i}"]:checked`);
-    if(val) score += parseInt(val.value);
- }
- if(score === 0){
-    alert("请先回答所有题目");
+  let scoreA = 0, scoreB = 0, scoreC = 0, scoreD = 0;
+  let answered = 0;
+
+  for(let i=0;i<questions.length;i++){
+    const checked = document.querySelector(`input[name="q${i}"]:checked`);
+    if(checked){
+      answered++;
+      const val = parseInt(checked.value);
+      const t = typeMap[i];
+      if(t === "A") scoreA += val;
+      else if(t === "B") scoreB += val;
+      else if(t === "C") scoreC += val;
+      else if(t === "D") scoreD += val;
+    }
+  }
+
+  if(answered < questions.length * 0.7){
+    alert("你还有不少题没有做完哦～\n至少答完 70% 再看结果，才能更接近真实状态。");
     return;
- }
- document.getElementById("result").innerHTML =
- "你的结果已生成 <br><br>👇 点击下方查看完整报告";
- setTimeout(()=>{
-     window.location.href="report.html";
- },1500);
+  }
+
+  // 找最高分类型
+  const scores = [
+    {type: "A", value: scoreA},
+    {type: "B", value: scoreB},
+    {type: "C", value: scoreC},
+    {type: "D", value: scoreD}
+  ].sort((a,b)=>b.value-a.value);
+
+  const top = scores[0].type;
+
+  document.getElementById("result").innerHTML =
+    "你的测评结果已生成 ✅<br>即将跳转到完整报告页面";
+
+  // 1.5 秒后跳转到报告页，并带上类型参数
+  setTimeout(()=>{
+    window.location.href = "报告.html?type=" + top;
+  }, 1500);
 }
 </script>
 </body>
 </html>
+
+
 
